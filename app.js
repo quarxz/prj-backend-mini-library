@@ -2,7 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const app = express();
 const cors = require("cors");
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3003;
 app.use(express.json());
 app.use(cors());
 
@@ -50,18 +50,22 @@ app.get("/:author", async (req, res) => {
   await connect();
   const { author } = req.params;
 
-  const { _id: authorId } = (await Author.findOne({ name: author })) || { _id: null };
+  try {
+    const { _id: authorId } = (await Author.findOne({
+      name: { $regex: author, $options: "i" },
+    })) || { _id: null };
+    // if (!authorId) {
+    //   return res.status(404).json({ message: "Cannot find this author!" });
+    // }
 
-  console.log(author);
-  console.log(authorId);
+    const books = await Book.find({ _id: authorId });
+    console.log(books);
 
-  if (!authorId) {
-    return res.status(404).json({ message: "Cannot find this author!" });
+    return res.json(books);
+  } catch (err) {
+    console.log(err);
+    return res.status.apply(401).json({ message: "Book does not exists!" });
   }
-
-  const books = await Book.find({ author: author });
-
-  return res.json(books);
 });
 
 const server = app.listen(port, () => console.log(`Express app listening on port ${port}!`));
