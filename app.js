@@ -73,34 +73,41 @@ app.get("/:author", async (req, res) => {
   }
 });
 
-app.get("/author/:book", async (req, res) => {
+app.get("/author/:id", async (req, res) => {
   await connect();
-  const { book } = req.params;
+  const { id } = req.params;
 
+  /**
+   * - Wenn keine Note mit id vorhanden
+   */
   try {
-    const {
-      _id: bookId,
-      title,
-      subtitle,
-      year,
-      isbn,
-    } = (await Book.findOne({ _id: book })) || {
-      _id: null,
-      title: null,
-      subtitle: null,
-      year: null,
-      isbn: null,
-    };
-
-    if (!bookId) {
-      return res.status(404).json({ message: "Could not find any book!" });
-    }
-
-    return res.json({ id: bookId, title, subtitle, year, isbn });
+    const { _id } = (await Book.findOne({ _id: id })) || { _id: null };
+    console.log(_id);
   } catch (err) {
-    console.log(err);
-    return res.status.apply(404).json({ message: "Book does not exists!" });
+    console.error(err);
+    // return res.status.apply(500).json({ message: "Server Error" });
+    return res.status(404).json({ message: "Book does not exits!" });
   }
+
+  const {
+    _id: bookId,
+    title,
+    subtitle,
+    year,
+    isbn,
+  } = (await Book.findOne({ _id: id })) || {
+    _id: null,
+    title: null,
+    subtitle: null,
+    year: null,
+    isbn: null,
+  };
+
+  if (!bookId) {
+    return res.status(404).json({ message: "Could not find any book!" });
+  }
+
+  return res.json({ id: bookId, title, subtitle, year, isbn });
 });
 
 const server = app.listen(port, () => console.log(`Express app listening on port ${port}!`));
