@@ -83,21 +83,19 @@ app.get("/author/:book", async (req, res) => {
     subtitle,
     year,
     isbn,
-    name,
   } = (await Book.findOne({ _id: book })).populate("author", "name") || {
     _id: null,
     title: null,
     subtitle: null,
     year: null,
     isbn: null,
-    name: null,
   };
 
   if (!bookId) {
     return res.status(404).json({ message: "Could not find any book!" });
   }
 
-  return res.json({ id: bookId, title, subtitle, year, isbn, auhtor: name });
+  return res.json({ id: bookId, title, subtitle, year, isbn });
 });
 
 const server = app.listen(port, () => console.log(`Express app listening on port ${port}!`));
