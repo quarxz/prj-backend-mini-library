@@ -6,7 +6,7 @@ const port = process.env.PORT || 3000;
 app.use(express.json());
 app.use(cors());
 
-const connect = require("../lib/connect");
+const connect = require("./lib/connect");
 const User = require("./models/User");
 const Author = require("./models/Author");
 const Book = require("./models/Book");
