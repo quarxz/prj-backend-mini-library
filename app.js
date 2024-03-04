@@ -12,9 +12,9 @@ const Author = require("./models/Author");
 const Book = require("./models/Book");
 
 // default catch-all handler
-app.get("*", (request, response) => {
-  response.status(404).json({ message: "Route not defined" });
-});
+// app.get("*", (request, response) => {
+//   response.status(404).json({ message: "Route not defined" });
+// });
 
 app.get("/", async (req, res) => {
   await connect();
