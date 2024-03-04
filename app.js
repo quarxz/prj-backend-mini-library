@@ -28,16 +28,27 @@ app.get("/", async (req, res) => {
   return res.status(200).json(users);
 });
 
-app.post("/", async (req, res) => {
+/**
+ * post specified user
+ */
+app.post("/:user", async (req, res) => {
   await connect();
-  const users = await User.find();
+  const { user } = req.params;
 
-  if (!users.length) {
-    return res.status(404).json({ message: "Users not found" });
+  const regex = new RegExp("\\b" + user + "\\b", "i");
+
+  const {
+    _id: userId,
+    email,
+    password,
+  } = (await User.findOne({ email: regex })) || { _id: null, email: null, password: null };
+
+  if (!userId) {
+    return res.status(404).json({ message: "User not found" });
   }
 
   // return res.json(notes.map((note) => ({ ...note._doc, id: note._id })));
-  return res.status(200).json(users);
+  return res.status(200).json({ id: _id, email, password });
 });
 
 app.get("/books", async (req, res) => {
