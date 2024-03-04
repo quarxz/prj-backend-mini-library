@@ -58,10 +58,12 @@ app.get("/:author", async (req, res) => {
     //   return res.status(404).json({ message: "Cannot find this author!" });
     // }
 
-    const books = await Book.find({ _id: authorId });
+    const books = await Book.find({ author: authorId }).populate("author");
     console.log(books);
 
-    return res.json(authorId);
+    console.log(authorId);
+
+    return res.json(books);
   } catch (err) {
     console.log(err);
     return res.status.apply(401).json({ message: "Book does not exists!" });
