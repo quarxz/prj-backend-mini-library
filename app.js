@@ -75,7 +75,7 @@ app.get("/:author", async (req, res) => {
 
 app.get("/author/:book", async (req, res) => {
   await connect();
-  const { author, book } = req.params;
+  const { book } = req.params;
 
   const {
     _id: bookId,
