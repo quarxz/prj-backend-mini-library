@@ -83,7 +83,7 @@ app.get("/author/:book", async (req, res) => {
     subtitle,
     year,
     isbn,
-  } = (await Book.findOne({ _id: book })).populate("author", "name") || {
+  } = (await Book.findOne({ _id: book })) || {
     _id: null,
     title: null,
     subtitle: null,
