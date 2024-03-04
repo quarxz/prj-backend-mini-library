@@ -69,7 +69,7 @@ app.get("/:author", async (req, res) => {
     return res.json(books);
   } catch (err) {
     console.log(err);
-    return res.status.apply(404).json({ message: "Book does not exists!" });
+    return res.status.apply(404).json({ message: "Author does not exists!" });
   }
 });
 
@@ -77,25 +77,30 @@ app.get("/author/:book", async (req, res) => {
   await connect();
   const { book } = req.params;
 
-  const {
-    _id: bookId,
-    title,
-    subtitle,
-    year,
-    isbn,
-  } = (await Book.findOne({ _id: book })) || {
-    _id: null,
-    title: null,
-    subtitle: null,
-    year: null,
-    isbn: null,
-  };
+  try {
+    const {
+      _id: bookId,
+      title,
+      subtitle,
+      year,
+      isbn,
+    } = (await Book.findOne({ _id: book })) || {
+      _id: null,
+      title: null,
+      subtitle: null,
+      year: null,
+      isbn: null,
+    };
 
-  if (!bookId) {
-    return res.status(404).json({ message: "Could not find any book!" });
+    if (!bookId) {
+      return res.status(404).json({ message: "Could not find any book!" });
+    }
+
+    return res.json({ id: bookId, title, subtitle, year, isbn });
+  } catch (err) {
+    console.log(err);
+    return res.status.apply(404).json({ message: "Book does not exists!" });
   }
-
-  return res.json({ id: bookId, title, subtitle, year, isbn });
 });
 
 const server = app.listen(port, () => console.log(`Express app listening on port ${port}!`));
