@@ -73,20 +73,9 @@ app.get("/:author", async (req, res) => {
   }
 });
 
-app.get("/:author/:book", async (req, res) => {
+app.get("/author/:book", async (req, res) => {
   await connect();
   const { author, book } = req.params;
-
-  /** */
-  const regex = new RegExp("\\b" + author + "\\b", "i");
-
-  const { _id: authorId } = (await Author.findOne({
-    name: regex,
-  })) || { _id: null };
-
-  if (!authorId) {
-    return res.status(404).json({ message: "Could not find any author!" });
-  }
 
   const {
     _id: bookId,
