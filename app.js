@@ -30,7 +30,7 @@ app.get("/", async (req, res) => {
 
 app.get("/books", async (req, res) => {
   await connect();
-  const books = await Book.find();
+  const books = await Book.find().populate("author");
   if (!books.length) {
     return res.json({ message: "Cannot find any books!" });
   }
