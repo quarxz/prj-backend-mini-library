@@ -29,7 +29,7 @@ app.get("/", async (req, res) => {
 });
 
 /**
- * post specified user
+ * post specified user login
  */
 app.post("/:user", async (req, res) => {
   await connect();
@@ -74,7 +74,7 @@ app.get("/:author", async (req, res) => {
   const { author } = req.params;
 
   try {
-    const regex = new RegExp("\\b" + author + "\\b", "i");
+    const regex = new RegExp("\\b" + author + "\\b", "ig");
 
     const { _id: authorId } = (await Author.findOne({
       name: regex,
