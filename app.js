@@ -51,7 +51,7 @@ app.get("/:author", async (req, res) => {
   const { author } = req.params;
 
   try {
-    const regex = new RegExp(author, "/\b\\w+\b/");
+    const regex = new RegExp("\\b" + author + "\\b", "i");
 
     const { _id: authorId } = (await Author.findOne({
       name: regex,
