@@ -28,6 +28,15 @@ app.get("/", async (req, res) => {
   return res.json(users);
 });
 
+app.get("/books", async (req, res) => {
+  await connect();
+  const books = await Book.find();
+  if (!books.length) {
+    return res.json({ message: "Cannot find any books!" });
+  }
+  return res.json(books);
+});
+
 const server = app.listen(port, () => console.log(`Express app listening on port ${port}!`));
 
 server.keepAliveTimeout = 120 * 1000;
