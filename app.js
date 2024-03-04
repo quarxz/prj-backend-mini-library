@@ -16,16 +16,16 @@ const Book = require("./models/Book");
 //   response.status(404).json({ message: "Route not defined" });
 // });
 
-app.get("/", async (req, res) => {
+app.post("/", async (req, res) => {
   await connect();
   const users = await User.find();
 
   if (!users.length) {
-    return res.json({ message: "Users not found" });
+    return res.status(404).json({ message: "Users not found" });
   }
 
   // return res.json(notes.map((note) => ({ ...note._doc, id: note._id })));
-  return res.json(users);
+  return res.status(200).json(users);
 });
 
 app.get("/books", async (req, res) => {
@@ -34,7 +34,7 @@ app.get("/books", async (req, res) => {
   if (!books.length) {
     return res.json({ message: "Cannot find any books!" });
   }
-  return res.json(books);
+  return res.status(200).json(books);
 });
 
 app.get("/authors", async (req, res) => {
@@ -43,7 +43,7 @@ app.get("/authors", async (req, res) => {
   if (!authors.length) {
     return res.json({ message: "Could not find any authors!" });
   }
-  return res.json(authors);
+  return res.status(200).json(authors);
 });
 
 app.get("/:author", async (req, res) => {
@@ -66,7 +66,7 @@ app.get("/:author", async (req, res) => {
     if (!books) {
       return res.status(404).json({ message: "Could not find any books for this author!" });
     }
-    return res.json(books);
+    return res.status(200).json(books);
   } catch (err) {
     console.log(err);
     return res.status.apply(404).json({ message: "Author does not exists!" });
@@ -85,7 +85,7 @@ app.get("/author/:id", async (req, res) => {
     console.log(_id);
   } catch (err) {
     console.error(err);
-    // return res.status.apply(500).json({ message: "Server Error" });
+
     return res.status(404).json({ message: "Book does not exits!" });
   }
 
@@ -107,7 +107,7 @@ app.get("/author/:id", async (req, res) => {
     return res.status(404).json({ message: "Could not find any book!" });
   }
 
-  return res.json({ id: bookId, title, subtitle, year, isbn });
+  return res.status(200).json({ id: bookId, title, subtitle, year, isbn });
 });
 
 const server = app.listen(port, () => console.log(`Express app listening on port ${port}!`));
