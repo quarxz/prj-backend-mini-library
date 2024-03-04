@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const { Schema } = mongoose;
 
-const userSchema = new Schema(
+const bookSchema = new Schema(
   {
     title: { type: String, required: true },
     subtitle: { type: String, required: false },
@@ -13,6 +13,6 @@ const userSchema = new Schema(
   { versionKey: false }
 );
 
-const Book = mongoose.models.Book || mongoose.model("Book", userSchema);
+const Book = mongoose.models.Book || mongoose.model("Book", bookSchema);
 
 module.exports = Book;
