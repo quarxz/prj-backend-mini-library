@@ -18,7 +18,7 @@ const Book = require("./models/Book");
 
 app.get("/", async (req, res) => {
   await connect();
-  const users = await User.find().populate("book");
+  const users = await User.find();
 
   if (!users.length) {
     return res.json({ message: "Users not found" });
