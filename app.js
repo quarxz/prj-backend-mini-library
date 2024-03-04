@@ -52,7 +52,7 @@ app.get("/:author", async (req, res) => {
 
   try {
     const { _id: authorId } = (await Author.findOne({
-      name: { $in: author },
+      name: { $all: author },
     })) || { _id: null };
     if (!authorId) {
       return res.status(404).json({ message: "Cannot find this author!" });
