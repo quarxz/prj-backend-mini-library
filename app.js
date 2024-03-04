@@ -73,9 +73,9 @@ app.get("/:author", async (req, res) => {
   }
 });
 
-app.get("/:book", async (req, res) => {
+app.get("/:author/:book", async (req, res) => {
   await connect();
-  const { book } = req.params;
+  const { author, book } = req.params;
 
   const {
     _id: bookId,
@@ -95,7 +95,7 @@ app.get("/:book", async (req, res) => {
     return res.status(404).json({ message: "Could not find any book!" });
   }
 
-  return json({ id: bookId, title, subtitle, year, isbn });
+  return res.json({ id: bookId, title, subtitle, year, isbn });
 });
 
 const server = app.listen(port, () => console.log(`Express app listening on port ${port}!`));
