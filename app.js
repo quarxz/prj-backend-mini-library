@@ -52,11 +52,11 @@ app.get("/:author", async (req, res) => {
 
   try {
     const { _id: authorId } = (await Author.findOne({
-      name: { $regex: author, $options: "i" },
+      name: { $all: author, $options: "i" },
     })) || { _id: null };
-    // if (!authorId) {
-    //   return res.status(404).json({ message: "Cannot find this author!" });
-    // }
+    if (!authorId) {
+      return res.status(404).json({ message: "Cannot find this author!" });
+    }
 
     const books = await Book.find({ author: authorId }).populate("author");
     console.log(books);
