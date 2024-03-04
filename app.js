@@ -16,6 +16,18 @@ app.get("*", (request, response) => {
   response.status(404).json({ message: "Route not defined" });
 });
 
+app.get("/", async (req, res) => {
+  await connect();
+  const users = await User.find().populate("book");
+
+  if (!notes.length) {
+    return res.json({ message: "Users not found" });
+  }
+
+  // return res.json(notes.map((note) => ({ ...note._doc, id: note._id })));
+  return res.json(users);
+});
+
 const server = app.listen(port, () => console.log(`Express app listening on port ${port}!`));
 
 server.keepAliveTimeout = 120 * 1000;
