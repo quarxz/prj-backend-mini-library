@@ -16,6 +16,18 @@ const Book = require("./models/Book");
 //   response.status(404).json({ message: "Route not defined" });
 // });
 
+app.get("/", async (req, res) => {
+  await connect();
+  const users = await User.find();
+
+  if (!users.length) {
+    return res.status(404).json({ message: "Users not found" });
+  }
+
+  // return res.json(notes.map((note) => ({ ...note._doc, id: note._id })));
+  return res.status(200).json(users);
+});
+
 app.post("/", async (req, res) => {
   await connect();
   const users = await User.find();
