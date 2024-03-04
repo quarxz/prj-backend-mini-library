@@ -30,7 +30,7 @@ app.get("/", async (req, res) => {
 
 app.get("/books", async (req, res) => {
   await connect();
-  const books = await Book.find().populate("author", "name");
+  const books = await Book.find();
   if (!books.length) {
     return res.json({ message: "Cannot find any books!" });
   }
@@ -39,7 +39,7 @@ app.get("/books", async (req, res) => {
 
 app.get("/authors", async (req, res) => {
   await connect();
-  const authors = await Author.find().populate("book");
+  const authors = await Author.find();
   if (!authors.length) {
     return res.json({ message: "Cannot find any authors!" });
   }
