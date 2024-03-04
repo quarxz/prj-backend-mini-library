@@ -41,7 +41,7 @@ app.get("/authors", async (req, res) => {
   await connect();
   const authors = await Author.find();
   if (!authors.length) {
-    return res.json({ message: "Cannot find any authors!" });
+    return res.json({ message: "Could not find any authors!" });
   }
   return res.json(authors);
 });
@@ -56,20 +56,46 @@ app.get("/:author", async (req, res) => {
     const { _id: authorId } = (await Author.findOne({
       name: regex,
     })) || { _id: null };
+
     if (!authorId) {
-      return res.status(404).json({ message: "Cannot find this author!" });
+      return res.status(404).json({ message: "Could not find any author!" });
     }
 
     const books = await Book.find({ author: authorId }).populate("author");
-    console.log(books);
 
-    console.log(authorId);
-
+    if (!books) {
+      return res.status(404).json({ message: "Could not find any books for this author!" });
+    }
     return res.json(books);
   } catch (err) {
     console.log(err);
-    return res.status.apply(401).json({ message: "Book does not exists!" });
+    return res.status.apply(404).json({ message: "Book does not exists!" });
   }
+});
+
+app.get("/:book", async (req, res) => {
+  await connect();
+  const { book } = req.params;
+
+  const {
+    _id: bookId,
+    title,
+    subtitle,
+    year,
+    isbn,
+  } = (await Book.findOne({ _id: book })) || {
+    _id: null,
+    title: null,
+    subtitle: null,
+    year: null,
+    isbn: null,
+  };
+
+  if (!bookId) {
+    return res.status(404).json({ message: "Could not find any book!" });
+  }
+
+  return json({ id: bookId, title, subtitle, year, isbn });
 });
 
 const server = app.listen(port, () => console.log(`Express app listening on port ${port}!`));
