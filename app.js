@@ -39,7 +39,7 @@ app.get("/books", async (req, res) => {
 
 app.get("/authors", async (req, res) => {
   await connect();
-  const authors = await Author.find();
+  const authors = await Author.find().populate("book");
   if (!authors.length) {
     return res.json({ message: "Cannot find any authors!" });
   }
