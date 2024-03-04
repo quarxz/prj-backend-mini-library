@@ -48,7 +48,7 @@ app.post("/:user", async (req, res) => {
   }
 
   // return res.json(notes.map((note) => ({ ...note._doc, id: note._id })));
-  return res.status(200).json({ id: _id, email, password });
+  return res.status(200).json({ id: userId, email, password });
 });
 
 app.get("/books", async (req, res) => {
