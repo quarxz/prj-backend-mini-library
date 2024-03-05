@@ -38,7 +38,7 @@ app.get("/users", async (req, res) => {
 /**
  * post specified user login
  */
-app.post("/users/:user", async (req, res) => {
+app.post("/user/:user", async (req, res) => {
   await connect();
   const { user } = req.params;
 
