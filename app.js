@@ -18,6 +18,13 @@ const Book = require("./models/Book");
 
 app.get("/", async (req, res) => {
   await connect();
+
+  // return res.json(notes.map((note) => ({ ...note._doc, id: note._id })));
+  return res.status(200).json({ message: "Hallo" });
+});
+
+app.get("/users", async (req, res) => {
+  await connect();
   const users = await User.find();
 
   if (!users.length) {
@@ -41,14 +48,20 @@ app.post("/:user", async (req, res) => {
     _id: userId,
     email,
     password,
-  } = (await User.findOne({ email: regex })) || { _id: null, email: null, password: null };
+    name,
+  } = (await User.findOne({ email: regex })) || {
+    _id: null,
+    email: null,
+    password: null,
+    name: null,
+  };
 
   if (!userId) {
     return res.status(404).json({ message: "User not found" });
   }
 
   // return res.json(notes.map((note) => ({ ...note._doc, id: note._id })));
-  return res.status(200).json({ id: userId, email, password });
+  return res.status(200).json({ id: userId, email, password, name });
 });
 
 app.get("/books", async (req, res) => {
@@ -69,7 +82,7 @@ app.get("/authors", async (req, res) => {
   return res.status(200).json(authors);
 });
 
-app.get("/:author", async (req, res) => {
+app.get("/authors/:author", async (req, res) => {
   await connect();
   const { author } = req.params;
 
@@ -96,12 +109,12 @@ app.get("/:author", async (req, res) => {
   }
 });
 
-app.get("/author/:id", async (req, res) => {
+app.get("/book/:id", async (req, res) => {
   await connect();
   const { id } = req.params;
 
   /**
-   * - Wenn keine Note mit id vorhanden
+   * - Wenn kein Book mit id vorhanden
    */
   try {
     const { _id } = (await Book.findOne({ _id: id })) || { _id: null };
@@ -132,6 +145,51 @@ app.get("/author/:id", async (req, res) => {
 
   return res.status(200).json({ id: bookId, title, subtitle, year, isbn });
 });
+
+/**
+ * post -> borrow a book
+ */
+app.post("/:user/:id/rent", async (req, res) => {
+  await connect();
+  const { user, id } = req.params;
+
+  const regex = new RegExp("\\b" + user + "\\b", "i");
+
+  console.log(user);
+
+  if (user) {
+    const { _id: userId } = (await User.findOne({ email: regex })) || { _id: null };
+
+    if (!userId) {
+      return res.status(404).json({ message: "Could not find user!" });
+    }
+
+    const book = req.body;
+
+    if (userId && book) {
+      const { _id: newUserId } = (await User.findByIdAndUpdate(userId, {
+        $push: { books: { book } },
+      })) || {
+        _id: null,
+      };
+      return res.status(200).json({ user, id, newUserId });
+    } else {
+      return res.status(400).json({
+        error: "Book NOT added. Book Id and/or User id is missing!",
+      });
+    }
+  }
+  res.status(400).json({ message: "Couldn't create new book borrow for user. User is missing!" });
+});
+
+/** delete - one specific book from user Books Array  */
+// app.post("/:user/:id/delete", async (req, res) => {
+//   await connect();
+//   const { user, id } = req.params;
+
+//   const regex = new RegExp("\\b" + user + "\\b", "i");
+
+// });
 
 const server = app.listen(port, () => console.log(`Express app listening on port ${port}!`));
 

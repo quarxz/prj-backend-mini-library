@@ -1,0 +1,36 @@
+[{
+  "_id": {
+    "$oid": "65e5b231a9dedfc57a33c842"
+  },
+  "name": "Arthur Canon Doyle"
+},
+{
+  "_id": {
+    "$oid": "65e5b231a9dedfc57a33c843"
+  },
+  "name": "J.K. Rowling"
+},
+{
+  "_id": {
+    "$oid": "65e5b231a9dedfc57a33c844"
+  },
+  "name": "J.R.R. Tolkien"
+},
+{
+  "_id": {
+    "$oid": "65e5b231a9dedfc57a33c845"
+  },
+  "name": "Walter Moers"
+},
+{
+  "_id": {
+    "$oid": "65e5b231a9dedfc57a33c846"
+  },
+  "name": "Peter Mayle"
+},
+{
+  "_id": {
+    "$oid": "65e5b231a9dedfc57a33c847"
+  },
+  "name": "Agatha Christie"
+}]

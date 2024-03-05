@@ -4,9 +4,10 @@ const { Schema } = mongoose;
 
 const userSchema = new Schema(
   {
-    email: { type: String, required: true },
-    password: { type: String, required: true },
-    books: [],
+    email: { type: String, required: false },
+    name: { type: String, required: false },
+    password: { type: String, required: false },
+    books: [{ bookId: { type: Schema.Types.ObjectId, ref: "Book" } }],
   },
   { versionKey: false }
 );

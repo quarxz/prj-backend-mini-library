@@ -1,0 +1,204 @@
+[{
+  "_id": {
+    "$oid": "65e5d89316215c2a90d1f8b7"
+  },
+  "title": "Sherlock Holmes",
+  "subtitle": "",
+  "author": {
+    "$oid": "65e5b231a9dedfc57a33c842"
+  },
+  "year": "1887",
+  "isbn": "9781420925531"
+},
+{
+  "_id": {
+    "$oid": "65e5d89316215c2a90d1f8b8"
+  },
+  "title": "Sherlock Holmes",
+  "subtitle": "The Hound of the Baskerville",
+  "author": {
+    "$oid": "65e5b231a9dedfc57a33c842"
+  },
+  "year": "1902",
+  "isbn": "9780689835711"
+},
+{
+  "_id": {
+    "$oid": "65e5d89316215c2a90d1f8b9"
+  },
+  "title": "Harry Potter",
+  "subtitle": "And the philosopher’s stone",
+  "author": {
+    "$oid": "65e5b231a9dedfc57a33c843"
+  },
+  "year": "1997",
+  "isbn": "3551354014"
+},
+{
+  "_id": {
+    "$oid": "65e5d89316215c2a90d1f8ba"
+  },
+  "title": "Harry Potter",
+  "subtitle": "And the chamber of secrets",
+  "author": {
+    "$oid": "65e5b231a9dedfc57a33c843"
+  },
+  "year": "1998",
+  "isbn": "978-3-551-35402-0"
+},
+{
+  "_id": {
+    "$oid": "65e5d89316215c2a90d1f8bb"
+  },
+  "title": "Harry Potter",
+  "subtitle": "And the prisoner of Ascaban",
+  "author": {
+    "$oid": "65e5b231a9dedfc57a33c843"
+  },
+  "year": "1999",
+  "isbn": "978-3-551-55833-6"
+},
+{
+  "_id": {
+    "$oid": "65e5d89316215c2a90d1f8bc"
+  },
+  "title": "Lord of the Rings",
+  "subtitle": "Fellowship of the Rings",
+  "author": {
+    "$oid": "65e5b231a9dedfc57a33c844"
+  },
+  "year": "1954",
+  "isbn": "978-3-608-93981-1"
+},
+{
+  "_id": {
+    "$oid": "65e5d89316215c2a90d1f8bd"
+  },
+  "title": "Lord of the Rings",
+  "subtitle": "The Two Towers",
+  "author": {
+    "$oid": "65e5b231a9dedfc57a33c844"
+  },
+  "year": "1954",
+  "isbn": "978-3-608-93982-8"
+},
+{
+  "_id": {
+    "$oid": "65e5d89316215c2a90d1f8be"
+  },
+  "title": "Lord of the Rings",
+  "subtitle": "The Return of the King",
+  "author": {
+    "$oid": "65e5b231a9dedfc57a33c844"
+  },
+  "year": "1955",
+  "isbn": "978-3-608-93983-5"
+},
+{
+  "_id": {
+    "$oid": "65e5d89316215c2a90d1f8bf"
+  },
+  "title": "Käpt’n Blaubär",
+  "subtitle": "Die 13 1/2 Leben des Käpt’n Blaubär",
+  "author": {
+    "$oid": "65e5b231a9dedfc57a33c845"
+  },
+  "year": "1999",
+  "isbn": "978-3-328-10562-6"
+},
+{
+  "_id": {
+    "$oid": "65e5d89316215c2a90d1f8c0"
+  },
+  "title": "Käpt’n Blaubär",
+  "subtitle": "Ensel und Krete: Ein Märchen aus Zamonien",
+  "author": {
+    "$oid": "65e5b231a9dedfc57a33c845"
+  },
+  "year": "2000",
+  "isbn": "978-3-328-10764-4"
+},
+{
+  "_id": {
+    "$oid": "65e5d89316215c2a90d1f8c1"
+  },
+  "title": "Käpt’n Blaubär",
+  "subtitle": "Rumo & Die Wunder im Dunkeln",
+  "author": {
+    "$oid": "65e5b231a9dedfc57a33c845"
+  },
+  "year": "2003",
+  "isbn": "978-3-328-10752-1"
+},
+{
+  "_id": {
+    "$oid": "65e5d89316215c2a90d1f8c2"
+  },
+  "title": "The Vintage Caper",
+  "subtitle": "",
+  "author": {
+    "$oid": "65e5b231a9dedfc57a33c846"
+  },
+  "year": "2009",
+  "isbn": "978-0-345-80456-3"
+},
+{
+  "_id": {
+    "$oid": "65e5d89316215c2a90d1f8c3"
+  },
+  "title": "The Marseille Caper",
+  "subtitle": "",
+  "author": {
+    "$oid": "65e5b231a9dedfc57a33c846"
+  },
+  "year": "2010",
+  "isbn": "978-0-307-74095-3"
+},
+{
+  "_id": {
+    "$oid": "65e5d89316215c2a90d1f8c4"
+  },
+  "title": "The Corsican Caper",
+  "subtitle": "",
+  "author": {
+    "$oid": "65e5b231a9dedfc57a33c846"
+  },
+  "year": "2014",
+  "isbn": "978-0-345-80456-3"
+},
+{
+  "_id": {
+    "$oid": "65e5d89316215c2a90d1f8c5"
+  },
+  "title": "Agatha Christie",
+  "subtitle": "And then there were none",
+  "author": {
+    "$oid": "65e5b231a9dedfc57a33c847"
+  },
+  "year": "1939",
+  "isbn": "9780312330873"
+},
+{
+  "_id": {
+    "$oid": "65e5d89316215c2a90d1f8c6"
+  },
+  "title": "Agatha Christie",
+  "subtitle": "Murder on the Orient Express",
+  "author": {
+    "$oid": "65e5b231a9dedfc57a33c847"
+  },
+  "year": "1934",
+  "isbn": "9780007119318"
+},
+{
+  "_id": {
+    "$oid": "65e5d89316215c2a90d1f8c7"
+  },
+  "title": "Agatha Christie",
+  "subtitle": "Death on the Nile",
+  "author": {
+    "$oid": "65e5b231a9dedfc57a33c847"
+  },
+  "year": "1937",
+  "isbn": "978-0-00-752755-7"
+}]
