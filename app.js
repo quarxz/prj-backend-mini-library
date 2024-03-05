@@ -40,7 +40,7 @@ app.post("/user/:user", getUser);
 app.get("/books", getBooks);
 app.get("/book/:id", getBook);
 app.post("/users/:userId/rent", userBorrowBook);
-app.post("/:user/:id/delete", userGiveBookBack);
+app.post("/users/:userId/delete", userGiveBookBack);
 
 // Authors
 app.get("/authors", getAuthors);
