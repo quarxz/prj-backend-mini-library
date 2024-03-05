@@ -7,7 +7,7 @@ const userSchema = new Schema(
     email: { type: String, required: false },
     name: { type: String, required: false },
     password: { type: String, required: false },
-    books: [{ type: Schema.Types.ObjectId, ref: "Book" }],
+    books: [{ type: Schema.Types.String, ref: "Book" }],
   },
   { versionKey: false }
 );
