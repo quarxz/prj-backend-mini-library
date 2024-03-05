@@ -55,26 +55,24 @@ const getUser = async (req, res) => {
 
 const userBorrowBook = async (req, res) => {
   await connect();
-  const { user, id } = req.params;
+  const { userId } = req.params;
 
-  const regex = new RegExp("\\b" + user + "\\b", "i");
+  if (userId) {
+    const user = (await User.findOne({ _id: userId })) || { _id: null };
 
-  if (user) {
-    const { _id: userId } = (await User.findOne({ _id: user })) || { _id: null };
-
-    if (!userId) {
+    if (!user) {
       return res.status(404).json({ message: "Could not find user!" });
     }
 
-    const book = req.body;
+    const { bookId } = req.body;
 
-    if (userId && book) {
-      const { _id: newUserId } = (await User.findByIdAndUpdate(userId, {
-        $push: { books: { book } },
+    if (userId && bookId) {
+      const updatedUser = (await User.findByIdAndUpdate(userId, {
+        $push: { books: bookId },
       })) || {
         _id: null,
       };
-      return res.status(200).json({ user, id, newUserId });
+      return res.status(200).json({ updatedUser });
     } else {
       return res.status(400).json({
         error: "Book NOT added. Book Id and/or User id is missing!",
