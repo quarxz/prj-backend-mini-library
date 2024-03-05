@@ -60,7 +60,7 @@ const userBorrowBook = async (req, res) => {
   const regex = new RegExp("\\b" + user + "\\b", "i");
 
   if (user) {
-    const { _id: userId } = (await User.findOne({ email: user })) || { _id: null };
+    const { _id: userId } = (await User.findOne({ _id: user })) || { _id: null };
 
     if (!userId) {
       return res.status(404).json({ message: "Could not find user!" });
@@ -91,7 +91,7 @@ const userGiveBookBack = async (req, res) => {
   const regex = new RegExp("\\b" + user + "\\b", "i");
 
   if (user) {
-    const { _id: userId } = (await User.findOne({ email: user })) || { _id: null };
+    const { _id: userId } = (await User.findOne({ _id: user })) || { _id: null };
 
     if (!userId) {
       return res.status(404).json({ message: "Could not find user!" });
