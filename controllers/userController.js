@@ -79,13 +79,16 @@ const userBorrowBook = async (req, res) => {
 
       bookstock = book.stock;
 
-      if (book.stock < 1) {
+      if (bookstock < 1) {
         return res.status(400).json({ message: "Book is out of Stock!" });
       }
 
       if (bookstock >= 1) {
         bookstock -= 1;
-        const bookUpdate = await Book.updateOne({ _id: bookId }, { $set: { stock: bookstock } });
+        const bookStockUpdate = await Book.updateOne(
+          { _id: bookId },
+          { $set: { stock: bookstock } }
+        );
       }
 
       const updatedUser = (await User.findByIdAndUpdate(userId, {
@@ -117,6 +120,14 @@ const userGiveBookBack = async (req, res) => {
     const { bookId } = req.body;
 
     if (userId && { bookId }) {
+      let bookstock = 0;
+      const book = await Book.findOne({ _id: bookId });
+
+      bookstock = book.stock;
+
+      bookstock += 1;
+      const bookStockUpdate = await Book.updateOne({ _id: bookId }, { $set: { stock: bookstock } });
+
       const updatedUser = (await User.findByIdAndUpdate(userId, {
         $pull: { books: bookId },
       })) || { _id: null };
