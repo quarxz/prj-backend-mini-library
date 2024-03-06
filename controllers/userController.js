@@ -68,10 +68,10 @@ const userBorrowBook = async (req, res) => {
 
     if (userId && bookId) {
       // test if book allready exists
-      const isBookExists = await User.find({ books: { $all: bookId } });
-      if (isBookExists.length) {
-        return res.status(409).json({ message: "This Book is allready in your Bag!" });
-      }
+      // const isBookExists = await User.find({ books: { $all: bookId } });
+      // if (isBookExists.length) {
+      //   return res.status(409).json({ message: "This Book is allready in your Bag!" });
+      // }
 
       let bookstock = 0;
       const book = await Book.findOne({ _id: bookId });
