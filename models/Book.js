@@ -9,6 +9,7 @@ const bookSchema = new Schema(
     year: { type: Number, required: false },
     isbn: { type: String, required: true },
     author: { type: Schema.Types.ObjectId, ref: "Author" },
+    stock: { type: Number, required: false },
   },
   { versionKey: false }
 );

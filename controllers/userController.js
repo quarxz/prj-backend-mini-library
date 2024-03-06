@@ -73,6 +73,21 @@ const userBorrowBook = async (req, res) => {
         return res.status(409).json({ message: "This Book is allready in your Bag!" });
       }
 
+      let bookstock = 0;
+      const book = await Book.findOne({ _id: bookId });
+      console.log(book.stock);
+
+      bookstock = book.stock;
+
+      if (book.stock < 1) {
+        return res.status(400).json({ message: "Book is out of Stock!" });
+      }
+
+      if (bookstock >= 1) {
+        bookstock -= 1;
+        const bookUpdate = await Book.updateOne({ _id: bookId }, { $set: { stock: bookstock } });
+      }
+
       const updatedUser = (await User.findByIdAndUpdate(userId, {
         $push: { books: bookId },
       })) || {
