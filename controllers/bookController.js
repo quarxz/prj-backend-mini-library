@@ -31,25 +31,13 @@ const getBook = async (req, res) => {
     return res.status(404).json({ message: "Book does not exits!" });
   }
 
-  const {
-    _id: bookId,
-    title,
-    subtitle,
-    year,
-    isbn,
-  } = (await Book.findOne({ _id: id })) || {
-    _id: null,
-    title: null,
-    subtitle: null,
-    year: null,
-    isbn: null,
-  };
+  const book = await Book.findOne({ _id: id }).populate("author", "name");
 
-  if (!bookId) {
+  if (!book) {
     return res.status(404).json({ message: "Could not find any book!" });
   }
 
-  return res.status(200).json({ id: bookId, title, subtitle, year, isbn });
+  return res.status(200).json({ ...book._doc, id: book._id, author: book.author.name });
 };
 
 module.exports = {

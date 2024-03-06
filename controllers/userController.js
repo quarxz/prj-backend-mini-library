@@ -67,9 +67,9 @@ const userBorrowBook = async (req, res) => {
     const { bookId } = req.body;
 
     if (userId && bookId) {
-      const userbooks = await User.find({ books: { $all: bookId } });
-
-      if (userbooks.length > 0) {
+      // test if book allready exists
+      const isBookExists = await User.find({ books: { $all: bookId } });
+      if (isBookExists.length) {
         return res.status(409).json({ message: "This Book is allready in your Bag!" });
       }
 
