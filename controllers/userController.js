@@ -66,13 +66,13 @@ const userBorrowBook = async (req, res) => {
 
     const { bookId } = req.body;
 
-    const userbooks = await User.find({ books: { $all: bookId } });
-
-    if (userbooks.length > 0) {
-      return res.status(409).json({ message: "This Book is allready in your Bag!" });
-    }
-
     if (userId && bookId) {
+      const userbooks = await User.find({ books: { $all: bookId } });
+
+      if (userbooks.length > 0) {
+        return res.status(409).json({ message: "This Book is allready in your Bag!" });
+      }
+
       const updatedUser = (await User.findByIdAndUpdate(userId, {
         $push: { books: bookId },
       })) || {
