@@ -29,21 +29,28 @@ const getUser = async (req, res) => {
   await connect();
   const { user } = req.params;
 
-  const userEmail = user.match(/([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9_-]+)/gi);
-  if (userEmail !== null) {
-    const userData = await User.findOne({ email: userEmail });
-    if (!userData) {
-      return res.status(404).json({ message: "User not found" });
-    }
-    return res.status(200).json({ ...userData._doc, id: userData._id });
-  }
+  const regex = new RegExp("\\b" + user + "\\b", "i");
 
-  const userData = await User.findOne({ _id: user });
-  if (!userData) {
+  const {
+    _id: userId,
+    email,
+    password,
+    name,
+    books,
+  } = (await User.findOne({ email: regex })) || {
+    _id: null,
+    email: null,
+    password: null,
+    name: null,
+    books: null,
+  };
+
+  if (!userId) {
     return res.status(404).json({ message: "User not found" });
   }
 
-  return res.status(200).json({ ...userData._doc, id: userData._id });
+  // return res.json(notes.map((note) => ({ ...note._doc, id: note._id })));
+  return res.status(200).json({ id: userId, email, password, name, books });
 };
 
 const userBorrowBook = async (req, res) => {
