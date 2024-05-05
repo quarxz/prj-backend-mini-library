@@ -1,10 +1,7 @@
-const express = require("express");
-const User = require("../models/User");
 const Author = require("../models/Author");
 const Book = require("../models/Book");
 
 const connect = require("../lib/connect");
-const mongoose = require("mongoose");
 
 const getAuthors = async (req, res) => {
   await connect();

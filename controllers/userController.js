@@ -1,15 +1,11 @@
-const express = require("express");
 const User = require("../models/User");
-const Author = require("../models/Author");
 const Book = require("../models/Book");
 
 const connect = require("../lib/connect");
-const mongoose = require("mongoose");
 
 /**
  * get all users
  */
-
 const getUsers = async (req, res) => {
   await connect();
   const users = await User.find();
@@ -29,7 +25,9 @@ const getUser = async (req, res) => {
   await connect();
   const { user } = req.params;
 
-  const regex = new RegExp("\\b" + user + "\\b", "i");
+  const userEmail = user.match(/([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9_-]+)/gi);
+
+  console.log(userEmail);
 
   const {
     _id: userId,
@@ -37,7 +35,7 @@ const getUser = async (req, res) => {
     password,
     name,
     books,
-  } = (await User.findOne({ email: regex })) || {
+  } = (await User.findOne(userEmail === null ? { _id: user } : { email: userEmail })) || {
     _id: null,
     email: null,
     password: null,
@@ -49,7 +47,6 @@ const getUser = async (req, res) => {
     return res.status(404).json({ message: "User not found" });
   }
 
-  // return res.json(notes.map((note) => ({ ...note._doc, id: note._id })));
   return res.status(200).json({ id: userId, email, password, name, books });
 };
 
@@ -68,26 +65,21 @@ const userBorrowBook = async (req, res) => {
 
     if (userId && bookId) {
       // test if book allready exists
-      // const isBookExists = await User.find({ books: { $all: bookId } });
-      // if (isBookExists.length) {
-      //   return res.status(409).json({ message: "This Book is allready in your Bag!" });
-      // }
+      const { _id: isBookExists } = await Book.findOne({ _id: bookId });
+      if (user.books.includes(isBookExists)) {
+        return res.status(400).json({ message: "Book already rented!" });
+      }
 
-      let bookstock = 0;
       const book = await Book.findOne({ _id: bookId });
-      console.log(book.stock);
 
-      bookstock = book.stock;
-
-      if (bookstock < 1) {
+      if (book.stock < 1) {
         return res.status(400).json({ message: "Book is out of Stock!" });
       }
 
-      if (bookstock >= 1) {
-        bookstock -= 1;
-        const bookStockUpdate = await Book.updateOne(
+      if (book.stock >= 1) {
+        const bookStockUpdate = await Book.findByIdAndUpdate(
           { _id: bookId },
-          { $set: { stock: bookstock } }
+          { $inc: { stock: -1 } }
         );
       }
 
@@ -120,13 +112,12 @@ const userGiveBookBack = async (req, res) => {
     const { bookId } = req.body;
 
     if (userId && { bookId }) {
-      let bookstock = 0;
       const book = await Book.findOne({ _id: bookId });
 
-      bookstock = book.stock;
-
-      bookstock += 1;
-      const bookStockUpdate = await Book.updateOne({ _id: bookId }, { $set: { stock: bookstock } });
+      const bookStockUpdate = await Book.findByIdAndUpdate(
+        { _id: bookId },
+        { $inc: { stock: +1 } }
+      );
 
       const updatedUser = (await User.findByIdAndUpdate(userId, {
         $pull: { books: bookId },
